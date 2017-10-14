@@ -1,0 +1,22 @@
+---
+- name: check for existing aws cli
+  stat:
+    path: "{{ awscli_bin_path }}"
+  register: _awscli
+
+- block:
+    - name: install dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ awscli_bundle_deps }}"
+
+    - name: extract bundle
+      unarchive:
+        src: https://s3.amazonaws.com/aws-cli/awscli-bundle.zip
+        dest: /tmp
+        remote_src: yes
+
+    - name: install bundle
+      command: /tmp/awscli-bundle/install -i {{ awscli_install_dir }} -b {{ awscli_bin_path }}
+  when: not (_awscli.stat.exists and _awscli.stat.islnk and _awscli.stat.executable)

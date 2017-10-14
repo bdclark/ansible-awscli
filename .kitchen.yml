@@ -1,0 +1,27 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_push
+  ansible_config: test/ansible.cfg
+  verbose: v
+  diff: true
+  chef_bootstrap_url: nil
+  playbook: test/playbooks/default.yml
+
+verifier:
+  name: inspec
+  inspec_tests:
+    - test/integration/inspec
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
+
+suites:
+  - name: default
+  - name: virtualenv
+    provisioner:
+      extra_vars:
+        awscli_install_method: virtualenv

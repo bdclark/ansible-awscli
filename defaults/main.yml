@@ -1,0 +1,20 @@
+---
+# must be one of `bundle` or `virtualenv`
+awscli_install_method: bundle
+# directory to install bundle or virtualenv
+awscli_install_dir: /usr/local/aws
+# path to symlink aws binary
+awscli_bin_path: /usr/local/bin/aws
+
+# cli version - supports 'present', 'latest', or a specific version number
+## 'present' installs once (ie. state: present)
+## 'latest' installs/upgrades (ie. state: latest)
+## specific version will pin
+## this setting is ignored with install method of 'bundle'
+awscli_version: present
+
+# dependencies to install for each install method
+awscli_bundle_deps:
+  - unzip
+awscli_virtualenv_deps:
+  - python-virtualenv

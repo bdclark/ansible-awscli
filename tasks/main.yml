@@ -1,0 +1,6 @@
+---
+- assert:
+    that: awscli_install_method in awscli_install_methods
+    msg: aws_cli_install_method must be one of {{ awscli_install_methods }}
+
+- include: "{{ awscli_install_method }}.yml"

@@ -1,0 +1,4 @@
+---
+awscli_install_methods:
+  - bundle
+  - virtualenv

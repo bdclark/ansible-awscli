@@ -1,0 +1,19 @@
+---
+- name: install dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ awscli_virtualenv_deps }}"
+
+- name: install aws cli
+  pip:
+    name: awscli
+    virtualenv: "{{ awscli_install_dir }}"
+    version: "{{ omit if awscli_version in ['latest', 'present'] else awscli_version }}"
+    state: "{{ 'latest' if awscli_version == 'latest' else 'present' }}"
+
+- name: create symlink
+  file:
+    src: "{{ awscli_install_dir }}/bin/aws"
+    dest: "{{ awscli_bin_path }}"
+    state: link
